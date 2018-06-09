@@ -31,7 +31,7 @@ if(PROD) {
   devtool = 'hidden-source-map';
   mode = 'production';
   stats = 'none';
-  outputPath = __dirname + '/build/public/assets/js';
+  outputPath = path.join(__dirname + '/build/public/assets/js');
 }
 
 console.log('Webpack build - ENV: ' + env + ' V: ' + time);
