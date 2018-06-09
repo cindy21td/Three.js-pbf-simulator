@@ -22,13 +22,13 @@ export default class GridMap {
   }
 
   getIndex(p) {
-    let x = p.position.x + this.bound;
-    let y = p.position.y + this.bound;
-    let z = p.position.z + this.bound;
+    const x = p.position.x + this.bound;
+    const y = p.position.y + this.bound;
+    const z = p.position.z + this.bound;
 
-    let idxX = Math.floor(x / this.unitW);
-    let idxY = Math.floor(y / this.unitH);
-    let idxZ = Math.floor(z / this.unitW);
+    const idxX = Math.floor(x / this.unitW);
+    const idxY = Math.floor(y / this.unitH);
+    const idxZ = Math.floor(z / this.unitW);
 
     return [idxX, idxY, idxZ];
   }
@@ -54,18 +54,18 @@ export default class GridMap {
   }
 
   findNeighbors(p) {
-    let idx = this.getIndex(p);
+    const idx = this.getIndex(p);
     p.neighbors = [];
 
-    let count = 0;
+    const count = 0;
     for (let i = -1; i <= 1; i++) {
-      let x = idx[0] + i;
+      const x = idx[0] + i;
       for (let j = -1; j <= 1; j++) {
-        let y = idx[1] + j;
+        const y = idx[1] + j;
         for (let k = -1; k <= 1; k++) {
-          let z = idx[2] + k;
+          const z = idx[2] + k;
 
-          let index = this.concatIndexes([x, y, z]);
+          const index = this.concatIndexes([x, y, z]);
           // Check if particles exists.
           if (this.particles[index] === undefined) continue;
 

@@ -15,7 +15,7 @@ export default class WaterParticles {
 
     // Initialize the particles.
     this.initParticles();
-	}
+  }
 
   initParticles() {
     this.frame = 0;
@@ -31,7 +31,7 @@ export default class WaterParticles {
     for (let i = 0; i < C.T_WIDTH; i++) {
 
       for (let j = 0; j < C.T_HEIGHT; j++) {
-        let idx = i * C.T_HEIGHT + j;
+        const idx = i * C.T_HEIGHT + j;
         var x = idx % C.UNIT;
         var z = Math.floor(idx / C.UNIT) % C.UNIT;
         var y = parseInt(idx / (C.UNIT * C.UNIT), 10);
@@ -40,7 +40,7 @@ export default class WaterParticles {
         y = C.YS - y * C.RADIUS;
         z = z * C.RADIUS - C.ZS / 2;
 
-        let p = new Particle(
+        const p = new Particle(
           x,
           y,
           z,

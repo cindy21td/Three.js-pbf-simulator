@@ -38,19 +38,19 @@ export default class Particle {
     for ( var i = 0; 4*i < theArray.length; i += 1 ) {
       let val = i;
 
-      let z = Math.floor(i / ((2*C.BOUNDS) * (2*C.BOUNDS)));
+      const z = Math.floor(i / ((2*C.BOUNDS) * (2*C.BOUNDS)));
       val = val % ((2*C.BOUNDS) * (2*C.BOUNDS));
-      let y = Math.floor(i / (2*C.BOUNDS));
+      const y = Math.floor(i / (2*C.BOUNDS));
       val = val % (2*C.BOUNDS);
-      let x = val;
+      const x = val;
 
-      let index = x + "_" + y + "_" + z;
-      let particles = this.gridMap.particles[index];
+      const index = x + "_" + y + "_" + z;
+      const particles = this.gridMap.particles[index];
       for (var j = 0; j < 4; j++) {
         if (particles === undefined) {
           theArray[ 4*i + j ] = 0;
         } else {
-          let p = this.gridMap.particles[index][j];
+          const p = this.gridMap.particles[index][j];
           theArray[ 4*i + j ] = (this.pList.indexOf(p)) / 255;
         }
       }
@@ -60,7 +60,7 @@ export default class Particle {
   initGpuCompute() {
     this.gpuCompute = new (new GPUComputationRenderer(THREE))( C.T_WIDTH, C.T_HEIGHT, this.renderer);
     var dtPosition = this.gpuCompute.createTexture();
-		var dtVelocity = this.gpuCompute.createTexture();
+    var dtVelocity = this.gpuCompute.createTexture();
     var dtGrid = this.gpuCompute.createTexture();
     var dtDensity = this.gpuCompute.createTexture();
     this.fillPositionTexture( dtPosition );
@@ -102,24 +102,24 @@ export default class Particle {
 
     var error = this.gpuCompute.init();
     if ( error !== null ) {
-        console.error( error );
+      console.error( error );
     }
 
   }
 
   fillPositionTexture( texture ) {
-		var theArray = texture.image.data;
-    let denom = 2 * C.BOUNDS;
+    var theArray = texture.image.data;
+    const denom = 2 * C.BOUNDS;
 
-		for ( var i = 0; 4*i < theArray.length; i += 1 ) {
-      let p = this.pList[i];
+    for ( var i = 0; 4*i < theArray.length; i += 1 ) {
+      const p = this.pList[i];
 
-			theArray[ 4*i + 0 ] = (p.position.x + C.BOUNDS) / denom;
-			theArray[ 4*i + 1 ] = (p.position.y + C.BOUNDS) / denom;
-			theArray[ 4*i + 2 ] = (p.position.z + C.BOUNDS) / denom;
-			theArray[ 4*i + 3 ] = 1;
-		}
-	}
+      theArray[ 4*i + 0 ] = (p.position.x + C.BOUNDS) / denom;
+      theArray[ 4*i + 1 ] = (p.position.y + C.BOUNDS) / denom;
+      theArray[ 4*i + 2 ] = (p.position.z + C.BOUNDS) / denom;
+      theArray[ 4*i + 3 ] = 1;
+    }
+  }
 
   fillVelocityTexture( texture ) {
     var theArray = texture.image.data;
@@ -138,11 +138,11 @@ export default class Particle {
 
   fillGridTexture( texture ) {
     var theArray = texture.image.data;
-    let denom = 2 * C.BOUNDS / C.RADIUS;
+    const denom = 2 * C.BOUNDS / C.RADIUS;
 
     for ( var i = 0; 4*i < theArray.length; i += 1 ) {
-      let p = this.pList[i];
-      let indexes = this.gridMap.getIndex(p);
+      const p = this.pList[i];
+      const indexes = this.gridMap.getIndex(p);
 
       theArray[ 4*i + 0 ] = indexes[0] / denom;
       theArray[ 4*i + 1 ] = indexes[1] / denom;

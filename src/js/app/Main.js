@@ -48,10 +48,10 @@ export default class Main {
 
     this.renderer = new THREE.WebGLRenderer({ antialias: true });
     this.camera = new THREE.PerspectiveCamera(
-        VIEW_ANGLE,
-        ASPECT,
-        NEAR,
-        FAR
+      VIEW_ANGLE,
+      ASPECT,
+      NEAR,
+      FAR
     );
     this.camera.position.set( 100, 20, 0 );
     this.camera.lookAt( this.scene.position );
@@ -132,23 +132,23 @@ export default class Main {
     }
     this.swayTimer = 0;
 
-    let folder1 = this.gui.addFolder('Fluid parameter');
+    const folder1 = this.gui.addFolder('Fluid parameter');
     folder1.add(this.params, 'REST_DENSITY', 0, 10).name('Rest Density');
     folder1.add(this.params, 'H', 1.5 * C.RADIUS, 5*C.RADIUS).name('Kernel Distance (H)');
     folder1.add(this.params, 'VORTICITY_E', 0, 20).name('Vorticity Epsilon');
     folder1.add(this.params, 'VISCOCITY_C', 0, 2).name('Viscocity Constant');
     folder1.open();
 
-    let folder2 = this.gui.addFolder('Force parameter');
+    const folder2 = this.gui.addFolder('Force parameter');
     folder2.add(this.params, 'GRAVITY', -10, 0).name('Gravity');
     folder2.add(this.params, 'WIND').name('Add Wind');
     folder2.add(this.params, 'windSway', 0, 10).name('Wind magnitude');
     folder2.add(this.params, 'windForm', { Diagonal: 0, Circle: 1 }).name('Wind direction');
     folder2.open();
 
-    let colorController = this.gui.addColor(this.params, 'particleColor');
+    const colorController = this.gui.addColor(this.params, 'particleColor');
     this.gui.add(this.params, 'pause');
-    let restartController = this.gui.add(this.params, 'restart');
+    const restartController = this.gui.add(this.params, 'restart');
 
     // Handle events
     colorController.onFinishChange(function(value) {
@@ -182,8 +182,8 @@ export default class Main {
     // Draw!
     // this.controls.update();
     var now = performance.now();
-		var delta = (now - this.last) / 1000;
-		//if (delta > 1) delta = 1; // safety cap on large deltas
+    var delta = (now - this.last) / 1000;
+    //if (delta > 1) delta = 1; // safety cap on large deltas
 
     this.last = now;
 

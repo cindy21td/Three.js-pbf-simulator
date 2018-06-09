@@ -1,5 +1,5 @@
 module.exports = function(THREE) {
-  let TypedArrayUtils = {};
+  const TypedArrayUtils = {};
 
   /**
    * In-place quicksort for typed arrays (e.g. for Float32Array)
@@ -182,7 +182,7 @@ module.exports = function(THREE) {
    * If you want to further minimize memory usage, remove Node.depth and replace in search algorithm with a traversal to root node (see comments at THREE.TypedArrayUtils.Kdtree.prototype.Node)
    */
 
-   TypedArrayUtils.Kdtree = function ( points, metric, eleSize ) {
+  TypedArrayUtils.Kdtree = function ( points, metric, eleSize ) {
 
   	var self = this;
 
@@ -312,9 +312,7 @@ module.exports = function(THREE) {
 
   				bestChild = node.right;
 
-  			} else {
-
-  				if ( point[ dimension ] < node.obj[ dimension ] ) {
+  			} else if ( point[ dimension ] < node.obj[ dimension ] ) {
 
   					bestChild = node.left;
 
@@ -323,8 +321,6 @@ module.exports = function(THREE) {
   					bestChild = node.right;
 
   				}
-
-  			}
 
   			// recursive search
 

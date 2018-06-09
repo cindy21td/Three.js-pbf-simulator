@@ -294,7 +294,7 @@ module.exports = function(THREE) {
 
     }();
 
-  };
+  }
 
 
   // This set of controls performs orbiting, dollying (zooming), and panning. It maintains
@@ -809,7 +809,7 @@ module.exports = function(THREE) {
     // force an update at start
     this.update();
 
-  };
+  }
 
   OrbitControls.prototype = Object.create( THREE.EventDispatcher.prototype );
   OrbitControls.prototype.constructor = OrbitControls;

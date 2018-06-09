@@ -53,29 +53,29 @@ export default class Particle {
     this.oldPosition = new THREE.Vector3();
     this.neighbors = [];
     this.lambda = 0;
-	}
+  }
 
   kernelSpiky(r) {
     let W = -45.0 / ( Math.PI * Math.pow(this.params.H, 6.0));
 
-    let magnitude = r.length();
+    const magnitude = r.length();
 
     if (magnitude >= 0.0 && magnitude <= this.params.H) {
       W = (W * (Math.pow(this.params.H - magnitude, 2.0)))
       return r.normalize().multiplyScalar(W);
-    } else {
-      return new THREE.Vector3();
-    }
+    } 
+    return new THREE.Vector3();
+    
   }
 
   kernelPoly6(magnitude) {
-    let W = 315.0 / (64.0 * Math.PI * Math.pow(this.params.H, 9));
+    const W = 315.0 / (64.0 * Math.PI * Math.pow(this.params.H, 9));
 
     if (magnitude >= 0.0 && magnitude <= this.params.H) {
       return (W * (Math.pow(Math.pow(this.params.H, 2) - Math.pow(magnitude, 2), 3)));
-    } else {
-      return 0.0;
-    }
+    } 
+    return 0.0;
+    
   }
 
   applyForce(delta, frame) {
@@ -113,7 +113,7 @@ export default class Particle {
   calculateLambda() {
     // Calculate density
     let density = 0.0;
-    let r = new THREE.Vector3();
+    const r = new THREE.Vector3();
     this.neighbors.forEach((n) => {
       r.subVectors(this.position, n.position);
       density += this.kernelPoly6(r.length());
@@ -123,10 +123,10 @@ export default class Particle {
     // console.log(density, constraint)
 
     // Calculate gradient
-    let densityGradient = new THREE.Vector3();
+    const densityGradient = new THREE.Vector3();
     this.neighbors.forEach((n) => {
       r.subVectors(this.position, n.position);
-      let grad = this.kernelSpiky(r);
+      const grad = this.kernelSpiky(r);
       densityGradient.add(grad);
     });
 
@@ -136,17 +136,17 @@ export default class Particle {
   }
 
   calculateSurfaceTension() {
-    let gradient = new THREE.Vector3();
-    let r = new THREE.Vector3();
+    const gradient = new THREE.Vector3();
+    const r = new THREE.Vector3();
     this.neighbors.forEach((n) => {
       r.subVectors(this.position, n.position);
-      let sCorr = - C.K * Math.pow(this.kernelPoly6(r.length()) / this.kernelPoly6(C.DELTA_Q * this.params.H), C.N);
-      let lambdaSum = this.lambda + n.lambda + sCorr;
+      const sCorr = - C.K * Math.pow(this.kernelPoly6(r.length()) / this.kernelPoly6(C.DELTA_Q * this.params.H), C.N);
+      const lambdaSum = this.lambda + n.lambda + sCorr;
 
       gradient.add(this.kernelSpiky(r).multiplyScalar(lambdaSum));
     });
 
-    let deltaP = gradient;
+    const deltaP = gradient;
     deltaP.divideScalar(this.params.REST_DENSITY);
 
     // Check for collision
@@ -155,9 +155,9 @@ export default class Particle {
   }
 
   calculateVorticity(delta) {
-    let wi = new THREE.Vector3();
-    let r = new THREE.Vector3();
-    let v = new THREE.Vector3();
+    const wi = new THREE.Vector3();
+    const r = new THREE.Vector3();
+    const v = new THREE.Vector3();
     this.neighbors.forEach((n) => {
       r.subVectors(this.position, n.position);
       v.subVectors(n.velocity, this.velocity);
@@ -165,8 +165,8 @@ export default class Particle {
       wi.add(v.cross(this.kernelSpiky(r)));
     });
 
-    let gradWi = new THREE.Vector3();
-    let wiLength = wi.length()
+    const gradWi = new THREE.Vector3();
+    const wiLength = wi.length()
     this.neighbors.forEach((n) => {
       r.subVectors(this.position, n.position);
 
@@ -180,9 +180,9 @@ export default class Particle {
   }
 
   calculateViscocity() {
-    let visco = new THREE.Vector3();
-    let r = new THREE.Vector3();
-    let v = new THREE.Vector3();
+    const visco = new THREE.Vector3();
+    const r = new THREE.Vector3();
+    const v = new THREE.Vector3();
     this.neighbors.forEach((n) => {
       r.subVectors(this.position, n.position);
       v.subVectors(n.velocity, this.velocity);
